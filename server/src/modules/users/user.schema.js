@@ -26,16 +26,8 @@ userSchema.pre("save", async function (next) {
     // don't rehash a hash
     if (!this.isModified("password")) return next();
 
-    try {
-        // hash password after salt generation
-        this.password = await bcrypt.hash(this.password, 10);
-
-        // move on
-        next();
-    } catch (error) {
-        // error passed on to the controller
-        next(error);
-    }
+    // hash password after salt generation
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
 export default mongoose.model("User", userSchema);
