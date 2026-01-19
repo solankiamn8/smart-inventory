@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -29,5 +30,21 @@ userSchema.pre("save", async function (next) {
     // hash password after salt generation
     this.password = await bcrypt.hash(this.password, 10);
 });
+
+// Method 1: Compare Password
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    // this.password is the HASHED verison in the database
+    // candidatePassword is the PLAIN text the user just typed
+    const isMatch = await bcrypt.compare(candidatePassword, this.password)
+    return isMatch
+}
+
+// Method 2: Create JWT
+userSchema.methods.createJWT = function () {
+    return jwt.sign({ userId: this._id, role: this.role },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_LIFETIME }
+    )
+}
 
 export default mongoose.model("User", userSchema);
