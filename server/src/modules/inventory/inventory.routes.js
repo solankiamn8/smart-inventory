@@ -3,6 +3,7 @@ import { createInventory, deleteInventory, getInventory, updateInventory } from 
 import { authenticateUser } from "../../middlewares/auth.middleware.js";
 
 const router = express.Router();
+// /api/inventory
 
 router.post("/create", authenticateUser, createInventory);
 router.get("/", authenticateUser, getInventory);

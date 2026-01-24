@@ -53,6 +53,17 @@ export const loginUser = async (req, res) => {
         // Create Token
         const token = await user.createJWT();
 
+        const isProduction = process.env.NODE_ENV === 'production';
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'None' : 'Lax',
+            maxAge: 24 * 60 * 60 * 1000     // 1 Day in milliseconds
+        }
+
+        res.cookie('token', token, cookieOptions);
+
         res.status(200).json({
             message: "Login Successful",
             user: {
@@ -60,8 +71,7 @@ export const loginUser = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role
-            },
-            token
+            }
         });
 
     } catch (error) {

@@ -1,14 +1,21 @@
 import express from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-import userRoutes from "./modules/users/user.routes.js";
-import inventoryRoutes from "./modules/inventory/inventory.routes.js";
+import apiRoutes from "./routes/index.js";
 
 const app = express();
 
-app.use(express.json());
+// Middleware
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true   // to allow cookies
+}));
 
-app.use("/api/users", userRoutes);
-app.use("/api/inventory", inventoryRoutes);
+app.use(express.json());
+app.use(cookieParser());
+
+app.use('/api', apiRoutes);
 
 app.get("/health", (req, res) => {
     res.json({
