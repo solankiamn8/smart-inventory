@@ -1,0 +1,33 @@
+:root {
+  /* Global Resets */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* ☀️ Light-Mode Variables (Default) */
+  --bg--color: #ffffff;
+  --text-color: #213547;
+  --primary-color: #646cff;
+  --card-bg: #f9f9f9;
+  --border-color: #e0e0e0;
+}
+
+/* 🌙 Dark Mode Overrides */
+/* when the <body> has class "dark". */
+body.dark {
+  --bg--color: #242424;
+  --text-color: rgba(255,255,255,0.87);
+  --primary-color: #535bf2;
+  --card-bg: #1a1a1a;
+  --border-color: #333;
+}
+
+body{
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg--color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;  
+}
+
