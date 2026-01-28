@@ -4,7 +4,7 @@ import inventoryRoutes from "../modules/inventory/inventory.routes.js";
 
 const router = Router();
 
-router.use("/api/users", userRoutes);
-router.use("/api/inventory", inventoryRoutes);
+router.use("/users", userRoutes);
+router.use("/inventory", inventoryRoutes);
 
 export default router;
